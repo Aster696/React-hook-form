@@ -13,7 +13,9 @@ type FormValues = {
     phonenumbers: string[],
     phNumbers: {
         numbers: string
-    }[]
+    }[],
+    age: number,
+    dob: Date
 };
 export const YoutubeForms = () => {
     const form = useForm<FormValues>({
@@ -26,7 +28,9 @@ export const YoutubeForms = () => {
                 facebook: ''
             },
             phonenumbers: ["", ""],
-            phNumbers: [{numbers: ''}]
+            phNumbers: [{numbers: ''}],
+            age: 0,
+            dob: new Date()
         }
     });
     const { register, control, handleSubmit, formState } = form;
@@ -166,6 +170,44 @@ export const YoutubeForms = () => {
                             Add
                         </button>
                     </div>
+                </div>
+
+                <div className="form-control">
+                    <label htmlFor="age">Age</label>
+                    <input 
+                        {...register("age", {
+                            valueAsNumber: true,
+                            required: {
+                                value: true,
+                                message: "Age is required"
+                            }
+                        })}
+                        type="number" 
+                        id="age" 
+                        name="age"
+                    />
+                    <p className="error">
+                        {errors.age?.message}
+                    </p>
+                </div>
+
+                <div className="form-control">
+                    <label htmlFor="dob">Date of birth</label>
+                    <input 
+                        {...register("dob", {
+                            valueAsDate: true,
+                            required: {
+                                value: true,
+                                message: "Date of birth is required"
+                            }
+                        })}
+                        type="date" 
+                        id="dob" 
+                        name="dob"
+                    />
+                    <p className="error">
+                        {errors.dob?.message}
+                    </p>
                 </div>
 
                 <button type="submit">Submit</button>
