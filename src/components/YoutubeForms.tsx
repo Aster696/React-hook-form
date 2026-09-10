@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { DevTool } from "@hookform/devtools";
  
@@ -29,7 +29,7 @@ export const YoutubeForms = () => {
             phNumbers: [{numbers: ''}]
         }
     });
-    const { register, control, handleSubmit, formState } = form;
+    const { register, control, handleSubmit, formState, watch } = form;
     const { errors } = formState;
     const { fields, append, remove } = useFieldArray({
         name: 'phNumbers',
@@ -39,8 +39,18 @@ export const YoutubeForms = () => {
     const onSubmit = (data: FormValues) => {
         console.log("Form data", data)
     }
+
+    useEffect(() => {
+        const sub = watch((value) => {
+            console.log(value)
+        })
+    }, [watch])
+
+    const username = watch();
     return (
         <div>
+            <h1>Youtube Form</h1>
+            {/* <h3>Watch value:{JSON.stringify(username)}</h3> */}
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-control">
                     <label htmlFor="username">User Name</label>
