@@ -33,8 +33,10 @@ export const YoutubeForms = () => {
             dob: new Date()
         }
     });
-    const { register, control, handleSubmit, formState, watch } = form;
-    const { errors } = formState;
+    const { register, control, handleSubmit, formState, watch, getValues, setValue } = form;
+    const { errors, dirtyFields, touchedFields, isDirty } = formState;
+    console.log(dirtyFields, touchedFields, isDirty);
+
     const { fields, append, remove } = useFieldArray({
         name: 'phNumbers',
         control
@@ -42,6 +44,18 @@ export const YoutubeForms = () => {
 
     const onSubmit = (data: FormValues) => {
         console.log("Form data", data)
+    }
+
+    const handleGetvalues = () => {
+        console.log("Getvalues", getValues("social"));
+    }
+
+    const handleSetValues = () => {
+        setValue('username', "Alister", {
+            shouldValidate: true,
+            shouldDirty: true,
+            shouldTouch: true
+        })
     }
 
     useEffect(() => {
@@ -221,6 +235,12 @@ export const YoutubeForms = () => {
                 </div>
 
                 <button type="submit">Submit</button>
+                <button type="button" onClick={handleGetvalues}>
+                    Get Values
+                </button>
+                <button type="button" onClick={handleSetValues}>
+                    Set Values
+                </button>
             </form>
             <DevTool control={control}/>
         </div>
